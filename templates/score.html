@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+        <h1>{{ dates }}のスコアを登録します</h1>
+        <form action="{{ url_for('.update_score')}}" method="post">
+        <table class="table table-striped">
+            <tr>
+                <th>試合のスコア登録</th>
+            </tr>
+            {% for g in games %}    
+            <tr>
+                <td>
+                    {{ g.home }}の得点→
+                    <input type="number" 
+                    style="max-width:50px;margin:0px;text-align:center"
+                    value="{{ g.home_score }}"
+                    name="home_score[]"/>                    
+                    {{ g.away }}の得点→
+                    <input type="number" 
+                    style="max-width:50px;margin:0px;text-align:center"
+                    value="{{ g.away_score }}"
+                    name="away_score[]"/>                                        
+                </td>
+            <tr>
+            <input type="hidden" value="{{ g.id }}"name="games[]"/>                
+            {% endfor %}
+        </table>        
+        <button type="submit" class="btn btn-default btn-info">スコアを登録する</button>                        
+        </form>
+{% endblock %}

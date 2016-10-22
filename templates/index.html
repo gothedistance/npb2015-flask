@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+    <h1>NPB 2015年 年間試合スケジュール</h1>
+    {% for month,game in games %}
+        <h1>{{ month }}月</h1>
+        <table class="table table-striped">
+            <tr>
+                <th>開催日</th>
+                <th colspan="6">試合</th>
+            </tr>
+        {% for group in game| groupby('dates') %}
+            <tr>
+            <td><a href="{{ url_for('.score')}}?dates={{ group.grouper }}">{{ group.grouper }}</a><td>
+            {% for g in group.list %}
+                <td>
+                    {{ g.home }} vs {{ g.away }}<br/>
+                    at {{ g.stadium }}<br/>
+                    on {{ g.start}}<br/>
+                    {% if g.home_score != 'NULL' %}
+                        {{ g.home_score}} - {{ g.away_score}}
+                    {% endif %}
+                </td>
+            {% endfor %}
+            </tr>
+        {% endfor %}            
+        </table>        
+    {% endfor %}
+{% endblock %}
